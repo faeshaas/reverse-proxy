@@ -28,7 +28,7 @@ jobs:
             echo "Inside the Build and push Docker image step"
             docker --version # print the version for logging
             cd nginx
-            docker build -t faeshaas/simple-reverse-proxy     
+            docker build -t faeshaas/simple-reverse-proxy .     
             docker tag faeshaas/simple-reverse-proxy faeshaas/simple-reverse-proxy:latest
             echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
             docker push faeshaas/simple-reverse-proxy:latest
