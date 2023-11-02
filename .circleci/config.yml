@@ -2,7 +2,7 @@
 version: 2.1
 
 jobs:
-  build-app: # job name
+  build: # job name
     docker: # executor type
       - image: cimg/base:current # Docker image that installs Docker and has Git,
     working_directory: ~/app
@@ -14,7 +14,7 @@ jobs:
           name: Install dependencies
           command: echo "No need to install anything. \n Just build and push the Docker image. Test"
       - run:
-          name: Build and push Docker image
+          name: Build and push app
           command: |
             echo "Inside the Build and push Docker image step"
             docker --version # print the version for logging
@@ -22,20 +22,8 @@ jobs:
             docker tag faeshaas/simple-express-app faeshaas/simple-express-app:latest
             echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
             docker push faeshaas/simple-express-app:latest
-
-  build-reverse-proxy: # job name
-    docker: # executor type
-      - image: cimg/base:current # Docker image that installs Docker and has Git,
-    working_directory: ~/app
-    steps:
-      - checkout
-      - setup_remote_docker:
-          version: 20.10.14
       - run:
-          name: Install dependencies
-          command: echo "No need to install anything. \n Just build and push the Docker image. Test"
-      - run:
-          name: Build and push Docker image
+          name: Build and push reverse proxy
           command: |
             echo "Inside the Build and push Docker image step"
             docker --version # print the version for logging
